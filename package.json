@@ -1,0 +1,19 @@
+{
+  "name": "expressbooksapp",
+  "version": "1.0.0",
+  "description": "rest api book project",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha tests"
+  },
+  "author": "Yurii Smal <smalygga1488@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  }
+}
