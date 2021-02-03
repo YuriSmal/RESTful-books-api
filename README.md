@@ -1,5 +1,7 @@
 RESTful Express Books App
 =========
+[![Build Status](https://travis-ci.org/YuriSmal/RESTful-books-api.svg?branch=main)](https://travis-ci.org/YuriSmal/RESTful-books-api)
+[![Coverage Status](https://coveralls.io/repos/github/YuriSmal/RESTful-books-api/badge.svg?branch=main)](https://coveralls.io/github/YuriSmal/RESTful-books-api?branch=main)
 
 #### This is a test RESTful app, that allows user to _add_, _update_, _delete_ or _view_ books using GET, POST, PUT and DELETE HTTP methods
 
