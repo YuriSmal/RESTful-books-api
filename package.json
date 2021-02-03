@@ -4,8 +4,8 @@
   "description": "rest api book project",
   "main": "app.js",
   "scripts": {
-    "test": "mocha tests",
-    "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec tests/*"
+    "test": "mocha --reporter spec",
+    "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec test/*"
   },
   "author": "Yurii Smal <smalygga1488@gmail.com>",
   "license": "ISC",
