@@ -20,6 +20,7 @@ RESTful Express Books App
   - all books: **GET** + http://localhost:8000/books/
   - the specific book: **GET** +  http://localhost:8000/books?title=title&author=author
   - to set pagination: **GET** + http://localhost:8000/books?page=1&limit=5
+
 ## Tests
 
 `npm test`
