@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "name": "Yurii",
+      "password": "$2b$10$MxgOTkizNb7QOh3VSYYcKeBtU0HR.3ClQLiUO5Y8YUNKxaHQ0ctXa"
+    },
+    {
+      "name": "John",
+      "password": "$2b$10$fu6e5H8uGTKPiTkL5s38heOEVUXxEcIeG8cUYhvo65dtR61CljBP2"
+    },
+    {
+      "name": "abch",
+      "password": "$2b$10$JeGXdNXEMSBFtdC971r6zuCu70ckB/NNpfoqTfPi2ZdTsWh3sdcZC"
+    }
+  ]
+}

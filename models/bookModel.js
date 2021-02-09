@@ -1,14 +1,14 @@
 const fs = require('fs').promises;
 
 const getBookData = function ()  {
-    return fs.readFile('/Users/ysmal/Desktop/ExpressBooksApp/public/books.json', 'utf8')
+    return fs.readFile('/Users/ysmal/Desktop/ExpressBooksApp/database/books.json', 'utf8')
         .then(res => JSON.parse(res))
         .catch((err) => {
             console.log(err)
         });
 }
 const addBook = function (book) {
-    return fs.readFile('/Users/ysmal/Desktop/ExpressBooksApp/public/books.json', 'utf8')
+    return fs.readFile('/Users/ysmal/Desktop/ExpressBooksApp/database/books.json', 'utf8')
         .then((data) => {
             if (data === false) {
                 let booksObj = {
@@ -16,14 +16,14 @@ const addBook = function (book) {
                 }
                 booksObj.books.push(book);
                 let bookJson = JSON.stringify(booksObj, null, 2);
-                return fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/public/books.json', bookJson, 'utf8')
+                return fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/database/books.json', bookJson, 'utf8')
                     .then(res => JSON.parse(res))
                     .catch(err => console.log({error: err}))
             } else {
                 booksObj = JSON.parse(data);
                 booksObj.books.push(book);
                 bookJson = JSON.stringify(booksObj, null, 2);
-                return fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/public/books.json', bookJson, 'utf8')
+                return fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/database/books.json', bookJson, 'utf8')
                     .then(res => res)
                     .catch(err => console.log({error: err}))
             }
@@ -31,8 +31,7 @@ const addBook = function (book) {
 }
 
 const updateBooksInfo = function (res, book, result) {
-    fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/public/books.json', JSON.stringify(result, null, 2), 'utf8')
-        .then((result) => res.send(result))
+    fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/database/books.json', JSON.stringify(result, null, 2), 'utf8')
         .catch(() => res.status(422).send({error: 'Not found!'}))
 }
 
@@ -59,7 +58,7 @@ exports.getBooks = function (title, author, page, limit) {
 
 exports.postBooks = function (res, title, author) {
     return getBookData()
-        .then((result) => {
+        .then(result => {
             let id = result.books[result.books.length - 1].id;
             let book = {
                 title: title,
@@ -90,7 +89,6 @@ exports.editBooks = function (res, title, id) {
                 }
             })
         })
-
 }
 
 exports.deleteBooks = function (res, id) {
@@ -99,9 +97,10 @@ exports.deleteBooks = function (res, id) {
             result.books.forEach(book => {
                 if (book.id === id) {
                     result.books.splice(book.id - 1, 1);
-                    return updateBooksInfo(res, book, result);
+                    return updateBooksInfo(res, book, result)
                 }
             })
+                .then(() => res.send(`The book with id ${id} has been deleted`))
         })
 }
 

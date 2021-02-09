@@ -1,5 +1,5 @@
 const bookModel = require('../models/bookModel');
-const validators = require('../validators/validators');
+const validators = require('../validators/booksValidators');
 
 exports.getBooks = function getBooks(req, res) {
     const author = req.query.author;
@@ -28,12 +28,8 @@ exports.addBook = function addBook(req, res) {
     const validationResult = validators.validateBooksPostRequest(req);
     if (validationResult.isValid) {
         bookModel.postBooks(res, title, author)
-            .then((book) => {
-                return res.send(book)
-            })
-            .catch((err) => {
-                res.send(err);
-            })
+            .then(book => res.send(book))
+            .catch(err => res.send(err))
     } else {
         return res.status(validationResult.status).send({error: validationResult.error});
     }
@@ -62,7 +58,7 @@ exports.deleteBook = function deleteBook(req, res) {
 
     const validationResult = validators.validateBooksDeleteRequest(req);
     if (validationResult.isValid) {
-        bookModel.deleteBooks(res, id)
+        return bookModel.deleteBooks(res, id)
             .then(result => {
                 return res.send(result);
             })
