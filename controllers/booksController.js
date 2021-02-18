@@ -24,11 +24,12 @@ exports.getBooks = function getBooks(req, res) {
 exports.addBook = function addBook(req, res) {
     const title = req.body.title;
     const author = req.body.author;
+    const pages = req.body.pages;
 
     const validationResult = validators.validateBooksPostRequest(req);
     if (validationResult.isValid) {
-        bookModel.postBooks(res, title, author)
-            .then(book => res.send(book))
+        bookModel.postBooks(res, title, author, pages)
+            .then((result) => res.status(201).send(result))
             .catch(err => res.send(err))
     } else {
         return res.status(validationResult.status).send({error: validationResult.error});
@@ -37,7 +38,7 @@ exports.addBook = function addBook(req, res) {
 
 exports.editBook = function editBook(req, res) {
     const title = req.body.title;
-    let id = Number(req.params.id);
+    const id = Number(req.params.id);
 
     const validationResult = validators.validateBooksPutRequest(req);
     if (validationResult.isValid) {

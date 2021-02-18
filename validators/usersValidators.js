@@ -21,7 +21,7 @@ exports.validateUsersPostRequest = (req) => {
     const name = req.body.name;
     const password = req.body.password;
 
-    if (name && name.length < 4 || typeof name === "number") {
+    if (name && name.length < 4 || name == null || typeof name === 'number') {
         return responses.invalidName;
     }
 

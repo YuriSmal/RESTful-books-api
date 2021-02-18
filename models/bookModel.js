@@ -7,6 +7,9 @@ const getBookData = function ()  {
             console.log(err)
         });
 }
+
+exports.getBookData = getBookData;
+
 const addBook = function (book) {
     return fs.readFile('/Users/ysmal/Desktop/ExpressBooksApp/database/books.json', 'utf8')
         .then((data) => {
@@ -20,11 +23,11 @@ const addBook = function (book) {
                     .then(res => JSON.parse(res))
                     .catch(err => console.log({error: err}))
             } else {
-                booksObj = JSON.parse(data);
+                let booksObj = JSON.parse(data);
                 booksObj.books.push(book);
-                bookJson = JSON.stringify(booksObj, null, 2);
+                let bookJson = JSON.stringify(booksObj, null, 2);
                 return fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/database/books.json', bookJson, 'utf8')
-                    .then(res => res)
+                    .then(result => result)
                     .catch(err => console.log({error: err}))
             }
         })
@@ -32,12 +35,13 @@ const addBook = function (book) {
 
 const updateBooksInfo = function (res, book, result) {
     fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/database/books.json', JSON.stringify(result, null, 2), 'utf8')
-        .catch(() => res.status(422).send({error: 'Not found!'}))
+        .then(() => (book))
+        .catch(() => ({error: 'Not found!'}))
 }
 
 exports.getBooks = function (title, author, page, limit) {
     return getBookData()
-        .then((books) => {
+        .then(books => {
             let result = [];
             if (title || author) {
                 books.books.forEach(item => {
@@ -56,25 +60,27 @@ exports.getBooks = function (title, author, page, limit) {
         })
 }
 
-exports.postBooks = function (res, title, author) {
+exports.postBooks = function (res, title, author, pages) {
     return getBookData()
         .then(result => {
-            let id = result.books[result.books.length - 1].id;
+            let id = result.books.length > 0 && result.books[result.books.length - 1].id;
             let book = {
                 title: title,
                 author: author,
-                id: ++id
+                id: ++id,
+                pages: pages
             };
 
-            if (title && title.length >= 2 && isNaN(title) && author && author.length >= 2 && isNaN(author)) {
+            if (title && title.length >= 2 && isNaN(title) && author && author.length >= 2 && isNaN(author)
+               && pages && Number.isInteger(pages)) {
                 return addBook(book, (err) => {
                     if (err) {
                         console.log('Error!');
                     }
                 })
-                    .then(() => res.status(201).send(book))
+                    .then(result => (book))
             } else {
-                res.status(422).send({error: "Not added!"});
+                 return ({error: "Not added!"});
             }
         })
 }
@@ -89,6 +95,7 @@ exports.editBooks = function (res, title, id) {
                 }
             })
         })
+        .then(() => ({message: `The title has been changed`}))
 }
 
 exports.deleteBooks = function (res, id) {
@@ -100,7 +107,8 @@ exports.deleteBooks = function (res, id) {
                     return updateBooksInfo(res, book, result)
                 }
             })
-                .then(() => res.send(`The book with id ${id} has been deleted`))
         })
+        .then(() => ({message: `The book with id ${id} has been deleted`}))
+
 }
 

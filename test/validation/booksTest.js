@@ -1,7 +1,7 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const validators = require('../validators/booksValidators');
+const validators = require('../../validators/booksValidators');
 const responses = validators.responses;
 
 describe('Get request validation test', () => {

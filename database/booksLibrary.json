@@ -1,0 +1,22 @@
+{
+  "booksLibrary": [
+    {
+      "title": "book1",
+      "author": "test1",
+      "id": 1,
+      "pages": 100,
+      "addedByUserId": 3,
+      "currentPage": 77,
+      "isReadingCompleted": false
+    },
+    {
+      "title": "book3",
+      "author": "test3",
+      "id": 3,
+      "pages": 300,
+      "addedByUserId": 2,
+      "currentPage": 1,
+      "isReadingCompleted": false
+    }
+  ]
+}
