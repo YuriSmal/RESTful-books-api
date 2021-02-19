@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 
 const getSessionData = function () {
-    return fs.readFile('/Users/ysmal/Desktop/ExpressBooksApp/sessions/sessions.json', 'utf8')
+    return fs.readFile('./sessions/sessions.json', 'utf8')
         .then(res => JSON.parse(res))
         .catch((err) => {
             return console.log(err)
@@ -10,7 +10,7 @@ const getSessionData = function () {
 exports.getSessionData = getSessionData;
 
 const writeDataToSession = function (sessionData) {
-    return fs.readFile('/Users/ysmal/Desktop/ExpressBooksApp/sessions/sessions.json', 'utf8')
+    return fs.readFile('./sessions/sessions.json', 'utf8')
         .then(data => {
             let existingId = JSON.parse(data).loggedUsers.find(user => user.userId === sessionData.userId);
             if (data === false) {
@@ -19,7 +19,7 @@ const writeDataToSession = function (sessionData) {
                 };
                 sessionObj.push(sessionData);
                 let sessionJson = JSON.stringify(sessionObj, null, 2);
-                return fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/sessions/sessions.json', sessionJson, 'utf8')
+                return fs.writeFile('./sessions/sessions.json', sessionJson, 'utf8')
                     .then(result => JSON.parse(result))
                     .catch(err => console.log({error: err}))
             } else if (existingId) {
@@ -28,7 +28,7 @@ const writeDataToSession = function (sessionData) {
                 let sessionObj = JSON.parse(data);
                 sessionObj.loggedUsers.splice(existingId.userId, 1, existingId);
                 let sessionJson = JSON.stringify(sessionObj,null, 2);
-                return fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/sessions/sessions.json', sessionJson, 'utf8')
+                return fs.writeFile('./sessions/sessions.json', sessionJson, 'utf8')
                     .then(() => ({message: `Already logged in!`,
                         accessToken: sessionData.accessToken, refreshToken: sessionData.refreshToken}))
                     .catch(err => ({error: err}))
@@ -36,7 +36,7 @@ const writeDataToSession = function (sessionData) {
                 let sessionObj = JSON.parse(data);
                 sessionObj.loggedUsers.push(sessionData);
                 let sessionJson = JSON.stringify(sessionObj, null, 2);
-                return fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/sessions/sessions.json', sessionJson, 'utf8')
+                return fs.writeFile('./sessions/sessions.json', sessionJson, 'utf8')
                     .then(() => ({message: `Successfully logged in`,
                         accessToken: sessionData.accessToken, refreshToken: sessionData.refreshToken}))
                     .catch(err => err)
@@ -62,14 +62,14 @@ exports.writeSession = function (res, accessToken, refreshToken, userId) {
 }
 
 exports.writeRefreshToken = function (refreshToken) {
-    return fs.readFile('/Users/ysmal/Desktop/ExpressBooksApp/sessions/sessions.json', 'utf8')
+    return fs.readFile('./sessions/sessions.json', 'utf8')
         .then(data => {
             let sessionObj = JSON.parse(data);
             if ( !sessionObj.refreshTokens) {
                 sessionObj.refreshTokens = []
             };
             sessionObj.refreshTokens.push(refreshToken);
-            return fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/sessions/sessions.json', JSON.stringify(sessionObj, null, 2), 'utf8')
+            return fs.writeFile('./sessions/sessions.json', JSON.stringify(sessionObj, null, 2), 'utf8')
                 .then(() => ({refreshToken: refreshToken}))
                 .catch(err => err)
         })
@@ -78,14 +78,12 @@ exports.writeRefreshToken = function (refreshToken) {
 exports.deleteRefreshToken = function (req) {
     return getSessionData()
         .then(result => {
-/*            result.refreshTokens = result.refreshTokens.filter(token => token !== req.body.token);
-            return (result.refreshTokens);*/
             result.refreshTokens.forEach(token => {
                 if (token === req.body.token) {
                     result.refreshTokens.splice(result.refreshTokens.indexOf(token), 1);
                 }
             })
-            return fs.writeFile('/Users/ysmal/Desktop/ExpressBooksApp/sessions/sessions.json', JSON.stringify(result, null, 2), 'utf8')
+            return fs.writeFile('./sessions/sessions.json', JSON.stringify(result, null, 2), 'utf8')
                 .then(() => ({refreshToken: req.body.token}))
                 .catch(err => err)
         })
