@@ -2,6 +2,7 @@ FORMAT: 1A
 HOST: http://localhost:8000
 
 # RESTful-books-api
+
 [![Build Status](https://travis-ci.org/YuriSmal/RESTful-books-api.svg?branch=main)](https://travis-ci.org/YuriSmal/RESTful-books-api)
 
 This is a simple API allowing to view, add, edit or delete books. <br>
