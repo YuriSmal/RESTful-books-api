@@ -13,7 +13,7 @@ exports.verifyUser = function (res, name, password) {
             return bcrypt.compare(password, user.password)
                 .then(result => {
                     if (result) {
-                        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '5m'});
+                        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '10m'});
                         const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
                         return sessionsModel.writeRefreshToken(refreshToken)
                             .then(() => {

@@ -1,9 +1,10 @@
 require('dotenv').config();
+const booksApiHelper = require('../spec/helpers/booksApiHelper');
 const fs = require('fs').promises;
 const bcrypt = require('bcrypt');
 
 const getUsersData = function () {
-    return fs.readFile('./database/users.json', 'utf8')
+    return fs.readFile(booksApiHelper.setUsersEnv(), 'utf8')
         .then(res => JSON.parse(res))
         .catch((err) => {
             return console.log(err)
@@ -12,7 +13,7 @@ const getUsersData = function () {
 exports.getUsersData = getUsersData;
 
 const addUser = function (user) {
-    return fs.readFile('./database/users.json', 'utf8')
+    return fs.readFile(booksApiHelper.setUsersEnv(), 'utf8')
         .then((data) => {
             if (data === false) {
                 let usersObj = {
@@ -20,14 +21,14 @@ const addUser = function (user) {
                 }
                 usersObj.users.push(user);
                 let usersJson = JSON.stringify(usersObj, null, 2);
-                return fs.writeFile('./database/users.json', usersJson, 'utf8')
+                return fs.writeFile(booksApiHelper.setUsersEnv(), usersJson, 'utf8')
                     .then(result => JSON.parse(result))
                     .catch(err => console.log({error: err}))
             } else {
                 usersObj = JSON.parse(data);
                 usersObj.users.push(user);
                 usersJson = JSON.stringify(usersObj, null, 2);
-                return fs.writeFile('./database/users.json', usersJson, 'utf8')
+                return fs.writeFile(booksApiHelper.setUsersEnv(), usersJson, 'utf8')
                     .then(res => res)
                     .catch(err => console.log({error: err}))
             }

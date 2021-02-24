@@ -39,6 +39,9 @@ exports.authRole = function (req, res, role, next) {
         .then(users => {
             return sessionsModel.getSessionData()
                 .then(sessionUsers => {
+                    if (process.env.NODE_ENV === 'test') {
+
+                    }
                     const loggedUser = sessionUsers.loggedUsers.find(user => user.accessToken === token);
                     if (!loggedUser) return res.status(401).send("Not logged in!");
                     const matchedUser = users.users.find(user => loggedUser.userId === user.id);

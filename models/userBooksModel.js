@@ -1,9 +1,10 @@
 const fs = require('fs').promises;
 const bookModel = require('./bookModel');
 const usersModel = require('./usersModel');
+const booksApiHelper = require('../spec/helpers/booksApiHelper');
 
 const getBooksData = function()  {
-    return fs.readFile('./database/booksLibrary.json', 'utf8')
+    return fs.readFile(booksApiHelper.setUserBooksEnv(), 'utf8')
         .then(res => JSON.parse(res))
         .catch(err => ({error: err}))
 }
@@ -14,12 +15,15 @@ exports.getUserLibrary = function(id) {
     return getBooksData()
         .then(result => {
             let filteredBooks = result.booksLibrary.filter(book => book.addedByUserId === id);
-            return filteredBooks;
+            let filteredJson = {
+                filteredBooks
+            };
+            return filteredJson;
         })
 }
 
 const addBook = function(bookToAdd) {
-    return fs.readFile('./database/booksLibrary.json', 'utf8')
+    return fs.readFile(booksApiHelper.setUserBooksEnv(), 'utf8')
         .then((data) => {
             if (data === false) {
                 let booksObj = {
@@ -27,7 +31,7 @@ const addBook = function(bookToAdd) {
                 }
                 booksObj.booksLibrary.push(bookToAdd);
                 let booksJson = JSON.stringify(booksObj, null, 2);
-                return fs.writeFile('./database/booksLibrary.json', booksJson, 'utf8')
+                return fs.writeFile(booksApiHelper.setUserBooksEnv(), booksJson, 'utf8')
                     .then(result => JSON.parse(result))
                     .catch(err => ({error: err}))
             } else {
@@ -38,7 +42,7 @@ const addBook = function(bookToAdd) {
                 }
                 booksObj.booksLibrary.push(bookToAdd);
                 let booksJson = JSON.stringify(booksObj, null, 2);
-                return fs.writeFile('./database/booksLibrary.json', booksJson, 'utf8')
+                return fs.writeFile(booksApiHelper.setUserBooksEnv(), booksJson, 'utf8')
                     .then(result => (bookToAdd))
                     .catch(err => ({error: err}))
             }
@@ -83,7 +87,7 @@ exports.updateReadStatus = function(req, bookId, userId, currentPage) {
                         } else if (bookToEdit.currentPage === bookToEdit.pages) {
                             bookToEdit.isReadingCompleted = true;
                         }
-                        return fs.writeFile('./database/booksLibrary.json', JSON.stringify(result, null, 2), 'utf8')
+                        return fs.writeFile(booksApiHelper.setUserBooksEnv(), JSON.stringify(result, null, 2), 'utf8')
                             .then(() => ({message: "Your reading status has been updated."}))
                             .catch(err => ({error: err}))
                     } else {
@@ -100,7 +104,7 @@ exports.deleteBookFromLibrary = function (req, userId, bookId) {
                     result.booksLibrary.splice(result.booksLibrary.indexOf(book), 1);
                 }
             })
-            return fs.writeFile('./database/booksLibrary.json', JSON.stringify(result, null, 2), 'utf8')
+            return fs.writeFile(booksApiHelper.setUserBooksEnv(), JSON.stringify(result, null, 2), 'utf8')
                 .then(() => (result))
                 .catch(err => ({error: err}))
         })

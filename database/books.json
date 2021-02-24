@@ -1,22 +1,3 @@
 {
-  "books": [
-    {
-      "title": "book1",
-      "author": "test1",
-      "id": 1,
-      "pages": 100
-    },
-    {
-      "title": "book2",
-      "author": "test2",
-      "id": 2,
-      "pages": 200
-    },
-    {
-      "title": "book3",
-      "author": "test3",
-      "id": 3,
-      "pages": 300
-    }
-  ]
+  "books": []
 }

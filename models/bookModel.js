@@ -1,7 +1,8 @@
 const fs = require('fs').promises;
+const booksApiHelper = require('../spec/helpers/booksApiHelper');
 
 const getBookData = function ()  {
-    return fs.readFile('./database/books.json', 'utf8')
+    return fs.readFile(booksApiHelper.setBooksEnv(), 'utf8')
         .then(res => JSON.parse(res))
         .catch((err) => {
             console.log(err)
@@ -11,7 +12,7 @@ const getBookData = function ()  {
 exports.getBookData = getBookData;
 
 const addBook = function (book) {
-    return fs.readFile('./database/books.json', 'utf8')
+    return fs.readFile(booksApiHelper.setBooksEnv(), 'utf8')
         .then((data) => {
             if (data === false) {
                 let booksObj = {
@@ -19,14 +20,14 @@ const addBook = function (book) {
                 }
                 booksObj.books.push(book);
                 let bookJson = JSON.stringify(booksObj, null, 2);
-                return fs.writeFile('./database/books.json', bookJson, 'utf8')
+                return fs.writeFile(booksApiHelper.setBooksEnv(), bookJson, 'utf8')
                     .then(res => JSON.parse(res))
                     .catch(err => console.log({error: err}))
             } else {
                 let booksObj = JSON.parse(data);
                 booksObj.books.push(book);
                 let bookJson = JSON.stringify(booksObj, null, 2);
-                return fs.writeFile('./database/books.json', bookJson, 'utf8')
+                return fs.writeFile(booksApiHelper.setBooksEnv(), bookJson, 'utf8')
                     .then(result => result)
                     .catch(err => console.log({error: err}))
             }
@@ -34,7 +35,7 @@ const addBook = function (book) {
 }
 
 const updateBooksInfo = function (res, book, result) {
-    fs.writeFile('./database/books.json', JSON.stringify(result, null, 2), 'utf8')
+    fs.writeFile(booksApiHelper.setBooksEnv(), JSON.stringify(result, null, 2), 'utf8')
         .then(() => (book))
         .catch(() => ({error: 'Not found!'}))
 }

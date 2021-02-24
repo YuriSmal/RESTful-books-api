@@ -1,12 +1,6 @@
 {
   "users": [
     {
-      "name": "Mark",
-      "password": "$2b$10$3taapoz5H0cXAFI6aK1Tg.mEBw.3jfT0p3E4coTHo7pc.G9YXnjje",
-      "role": "user",
-      "id": 1
-    },
-    {
       "name": "Yurii",
       "password": "$2b$10$MxgOTkizNb7QOh3VSYYcKeBtU0HR.3ClQLiUO5Y8YUNKxaHQ0ctXa",
       "role": "admin",

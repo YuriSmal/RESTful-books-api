@@ -3,7 +3,7 @@ const usersController = require('../controllers/usersController');
 const userBooksController = require('../controllers/userBooksController');
 
 module.exports = function appRouter(app) {
-    app.get('/books', usersController.tokenAuthentication, usersController.authRole("admin"), booksController.getBooks);
+    app.get('/books', usersController.tokenAuthentication, booksController.getBooks);
     app.post('/books', usersController.tokenAuthentication, usersController.authRole("admin"), booksController.addBook);
     app.post('/users', usersController.addUser);
     app.post('/token', usersController.refreshToken);

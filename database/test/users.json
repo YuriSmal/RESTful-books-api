@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "name": "Yurii",
+      "password": "$2b$10$MxgOTkizNb7QOh3VSYYcKeBtU0HR.3ClQLiUO5Y8YUNKxaHQ0ctXa",
+      "role": "admin",
+      "id": 2
+    },
+    {
+      "name": "John",
+      "password": "$2b$10$NXnvVTNkUSxVDOvQ5ZeUjuUFySoN0N4PHzAHJlLZ8NtMEEu5b1WpW",
+      "id": 3
+    },
+    {
+      "name": "John",
+      "password": "$2b$10$0VmvDZnPho0yTN4tQ8aXF.12fO2mwBN4o7z5CGwnqwwB.1M/tV4Le",
+      "id": 4
+    }
+  ]
+}
