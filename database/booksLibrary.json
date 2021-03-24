@@ -1,3 +1,13 @@
 {
-  "booksLibrary": []
+  "booksLibrary": [
+    {
+      "title": "book3",
+      "author": "someone3",
+      "id": 3,
+      "pages": 200,
+      "addedByUserId": 2,
+      "currentPage": 1,
+      "isReadingCompleted": false
+    }
+  ]
 }

@@ -104,7 +104,7 @@ exports.deleteBooks = function (res, id) {
         .then(result => {
             result.books.forEach(book => {
                 if (book.id === id) {
-                    result.books.splice(book.id - 1, 1);
+                    result.books.splice(result.books.indexOf(book), 1);
                     return updateBooksInfo(res, book, result)
                 }
             })

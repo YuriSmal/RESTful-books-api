@@ -15,6 +15,11 @@
       "name": "John",
       "password": "$2b$10$0VmvDZnPho0yTN4tQ8aXF.12fO2mwBN4o7z5CGwnqwwB.1M/tV4Le",
       "id": 4
+    },
+    {
+      "name": "John",
+      "password": "$2b$10$.9R2Nvtj1JJrC4CC9djQhOGtiesbhmQhizhn33z6jaStHuv1uuFli",
+      "id": 5
     }
   ]
 }
